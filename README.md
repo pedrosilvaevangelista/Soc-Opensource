@@ -3,173 +3,157 @@
 [![GitHub stars](https://img.shields.io/github/stars/pedrosilvaevangelista/Soc-Opensource.svg)](https://github.com/pedrosilvaevangelista/Soc-Opensource/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/pedrosilvaevangelista/Soc-Opensource.svg)](https://github.com/pedrosilvaevangelista/Soc-Opensource/network)
 
-## 📋 Sobre o Projeto
+---
+
+## 📋 1. Sobre o Projeto
 
 Este projeto apresenta a **arquitetura e implementação** de um **Security Operations Center (SOC)** completo utilizando exclusivamente **ferramentas open source**. O objetivo é demonstrar como criar uma solução robusta de segurança cibernética com capacidades de **detecção, monitoramento, análise e resposta a incidentes** de forma integrada e funcional.
 
 > **⚠️ Importante**: Este repositório tem como foco **apresentar a solução implementada** e sua arquitetura. Não inclui configurações específicas, scripts de instalação ou tutoriais passo-a-passo. Para implementação, consulte a documentação oficial de cada ferramenta.
 
-### 🎯 O que foi Implementado
+### 1.1 🎯 Capacidades Implementadas
 
-- **Detecção proativa** de ameaças e comportamentos suspeitos
-- **Visualização centralizada** de eventos de segurança
-- **Resposta estruturada** a incidentes
-- **Análise forense** e investigação de casos
-- **Threat Intelligence** compartilhada
-- **Arquitetura simples** e de baixo custo
-- **Integração completa** entre todas as ferramentas
+| Capacidade | Descrição |
+|------------|-----------|
+| **Detecção Proativa** | Identificação de ameaças e comportamentos suspeitos em tempo real |
+| **Visualização Centralizada** | Dashboard unificado de eventos de segurança |
+| **Resposta Estruturada** | Workflow organizado para resposta a incidentes |
+| **Análise Forense** | Investigação detalhada de casos de segurança |
+| **Threat Intelligence** | Compartilhamento e correlação de indicadores de ameaças |
+| **Arquitetura Simples** | Solução de baixo custo e fácil manutenção |
+| **Integração Completa** | Comunicação automática entre todas as ferramentas |
 
-## 🏗️ Arquitetura da Solução
+---
+
+## 🏗️ 2. Arquitetura da Solução
 
 ```
 ┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
 │   Workstations  │    │    Firewall      │    │   SOC Servers   │
 │                 │    │   (OPNsense)     │    │                 │
-│ • Wazuh Agent   │───▶│ • CrowdSec      │───▶│ • Wazuh SIEM    │
+│ • Wazuh Agent   │──▶│ • CrowdSec        │───▶│ • Wazuh SIEM   │
 │ • Sysmon        │    │ • Suricata       │    │ • DFIR-IRIS     │
 │                 │    │ • ClamAV         │    │ • MISP          │
 │                 │    │ • Wazuh Agent    │    │                 │
 └─────────────────┘    └──────────────────┘    └─────────────────┘
 ```
 
-## 🛡️ Componentes da Solução
+### 2.1 📊 Visão Geral dos Componentes
 
-### 🔥 Firewall/Roteador (OPNsense)
+| Camada | Componente | Função Principal |
+|--------|-----------|------------------|
+| **Endpoints** | Wazuh Agent | Coleta de logs e monitoramento local |
+| **Endpoints** | Sysmon | Logging avançado de atividades do Windows |
+| **Perímetro** | OPNsense | Firewall e roteamento de rede |
+| **Perímetro** | CrowdSec | Detecção comportamental e bloqueio de IPs |
+| **Perímetro** | Suricata | IDS/IPS com inspeção profunda de pacotes |
+| **Perímetro** | ClamAV | Detecção de malware e vírus |
+| **Core SOC** | Wazuh SIEM | Correlação de eventos e alertas |
+| **Core SOC** | DFIR-IRIS | Gerenciamento de investigações forenses |
+| **Core SOC** | MISP | Plataforma de threat intelligence |
 
-**OPNsense** - Firewall e roteador open source baseado em FreeBSD
+---
 
-#### Ferramentas Integradas:
+## 🛡️ 3. Componentes Detalhados
 
-- **🛡️ CrowdSec**: Sistema de detecção e resposta a intrusões (IDR) baseado em comportamento
-  - Análise de logs em tempo real
-  - Detecção de comportamentos maliciosos (brute force, port scanning, etc.)
-  - Compartilhamento de threat intelligence com a comunidade
-  - Bloqueio automático de IPs maliciosos
+### 3.1 🔥 Camada de Perímetro: Firewall/Roteador
 
-- **🔍 Suricata**: IDS/IPS e engine de inspeção profunda de pacotes (DPI)
-  - Detecção baseada em regras (signatures)
-  - Suporte a regras personalizadas
-  - Inspeção de protocolos em tempo real
-  - Logging detalhado de eventos
+#### OPNsense
+**Firewall e roteador open source baseado em FreeBSD**
 
-- **🦠 ClamAV**: Antivírus open source
-  - Detecção de malware, trojans e vírus
-  - Scanning de arquivos em tempo real
-  - Atualizações automáticas de assinaturas
+| Ferramenta | Tipo | Funcionalidades Principais |
+|-----------|------|----------------------------|
+| **CrowdSec** | IDR (Intrusion Detection & Response) | • Análise de logs em tempo real<br>• Detecção de brute force e port scanning<br>• Compartilhamento de threat intelligence<br>• Bloqueio automático de IPs maliciosos |
+| **Suricata** | IDS/IPS + DPI | • Detecção baseada em regras (signatures)<br>• Suporte a regras personalizadas<br>• Inspeção de protocolos em tempo real<br>• Logging detalhado de eventos |
+| **ClamAV** | Antivírus | • Detecção de malware, trojans e vírus<br>• Scanning de arquivos em tempo real<br>• Atualizações automáticas de assinaturas |
+| **Wazuh Agent** | Monitor | • Monitoramento de integridade de arquivos<br>• Coleta de eventos do sistema<br>• Detecção de ameaças local |
 
-- **📊 Wazuh Agent**: Coleta de logs e monitoramento
-  - Monitoramento de integridade de arquivos
-  - Coleta de eventos do sistema
-  - Detecção de ameaças local
+### 3.2 💻 Camada de Endpoints: Workstations
 
-### 💻 Workstations
+| Agente | Plataforma | Capacidades |
+|--------|-----------|-------------|
+| **Wazuh Agent** | Windows/Linux/macOS | • Coleta de logs do sistema operacional<br>• Monitoramento de integridade de arquivos<br>• Detecção de rootkits e malware<br>• Monitoramento de registry (Windows)<br>• Compliance checking (PCI DSS, GDPR, HIPAA) |
+| **Sysmon** | Windows | • Logging detalhado de atividades do sistema<br>• Rastreamento de processos e conexões de rede<br>• Monitoramento de mudanças em arquivos<br>• Eventos de criação de processos<br>• Detecção de técnicas de evasão |
 
-#### Agentes de Monitoramento:
+### 3.3 🖥️ Camada Core: Servidores SOC
 
-- **📊 Wazuh Agent**: 
-  - Coleta de logs do sistema operacional
-  - Monitoramento de integridade de arquivos
-  - Detecção de rootkits e malware
-  - Monitoramento de registry (Windows)
-  - Compliance checking (PCI DSS, GDPR, HIPAA)
+| Plataforma | Categoria | Funcionalidades |
+|-----------|-----------|-----------------|
+| **Wazuh SIEM/XDR** | Análise e Correlação | • Coleta e correlação de logs de todas as fontes<br>• Análise comportamental e detecção de anomalias<br>• Alertas em tempo real com diferentes níveis de severidade<br>• Dashboard interativo para visualização<br>• Compliance reporting automatizado<br>• API REST para integrações |
+| **DFIR-IRIS** | Resposta a Incidentes | • Gerenciamento de casos de incidentes<br>• Workflow de investigação estruturado<br>• Colaboração entre analistas<br>• Timeline de eventos detalhada<br>• Documentação de evidências<br>• Relatórios de incidentes automatizados<br>• Integração com Wazuh via webhook |
+| **MISP** | Threat Intelligence | • Threat Intelligence centralizada<br>• Compartilhamento de IOCs (Indicators of Compromise)<br>• Correlação de ameaças entre casos<br>• Feed de inteligência externa<br>• API para automação<br>• Taxonomias e tags organizacionais |
 
-- **🔬 Sysmon**: Ferramenta avançada de logging do Windows
-  - Logging detalhado de atividades do sistema
-  - Rastreamento de processos e conexões de rede
-  - Monitoramento de mudanças em arquivos
-  - Eventos de criação de processos
-  - Detecção de técnicas de evasão
+---
 
-### 🖥️ Servidores SOC
+## 📦 4. Requisitos de Infraestrutura
 
-#### 📈 Wazuh SIEM/XDR
-- **Coleta e correlação** de logs de todas as fontes
-- **Análise comportamental** e detecção de anomalias
-- **Alertas em tempo real** com diferentes níveis de severidade
-- **Dashboard interativo** para visualização
-- **Compliance reporting** automatizado
-- **API REST** para integrações
+### 4.1 💾 Hardware Mínimo Recomendado
 
-#### 🔍 DFIR-IRIS (Digital Forensics and Incident Response)
-- **Gerenciamento de casos** de incidentes
-- **Workflow de investigação** estruturado
-- **Colaboração entre analistas**
-- **Timeline de eventos** detalhada
-- **Documentação de evidências**
-- **Relatórios de incidentes** automatizados
-- **Integração com Wazuh** via webhook
+#### Firewall/Roteador
 
-#### 🌐 MISP (Malware Information Sharing Platform)
-- **Threat Intelligence** centralizada
-- **Compartilhamento de IOCs** (Indicators of Compromise)
-- **Correlação de ameaças** entre casos
-- **Feed de inteligência** externa
-- **API para automação**
-- **Taxonomias e tags** organizacionais
+| Componente | Especificação Mínima | Observações |
+|-----------|---------------------|-------------|
+| **CPU** | 2 cores, 2.0 GHz | Processamento de regras e inspeção |
+| **RAM** | 4 GB | Para operação estável |
+| **Storage** | 32 GB SSD | Armazenamento de logs locais |
+| **Network** | 2x NICs Gigabit | WAN e LAN |
 
-## 📦 Pré-requisitos
+#### Servidor SOC
 
-### Hardware Mínimo Recomendado
+| Componente | Especificação Mínima | Recomendado | Observações |
+|-----------|---------------------|-------------|-------------|
+| **CPU** | 4 cores, 2.5 GHz | 8 cores, 3.0 GHz | Para correlação de eventos |
+| **RAM** | 16 GB | 32 GB | Elasticsearch consome bastante RAM |
+| **Storage** | 500 GB SSD | 1 TB SSD | Retenção de logs históricos |
+| **Network** | 1x NIC Gigabit | 1x NIC Gigabit | Comunicação com endpoints |
 
-#### Firewall/Roteador:
-- **CPU**: 2 cores, 2.0 GHz
-- **RAM**: 4 GB
-- **Storage**: 32 GB SSD
-- **Network**: 2x NICs Gigabit
+### 4.2 💿 Software Base
 
-#### Servidor SOC:
-- **CPU**: 4 cores, 2.5 GHz
-- **RAM**: 16 GB (32 GB recomendado)
-- **Storage**: 500 GB SSD (1 TB recomendado)
-- **Network**: 1x NIC Gigabit
+| Categoria | Requisito | Versões Suportadas |
+|-----------|-----------|-------------------|
+| **Sistema Operacional** | Linux | Ubuntu 20.04+, CentOS 8+, Debian 11+ |
+| **Sistema Operacional** | FreeBSD | Para OPNsense |
+| **Containerização** | Docker & Docker Compose | Versão estável mais recente |
+| **Linguagem** | Python | 3.8+ |
+| **Controle de Versão** | Git | Versão estável mais recente |
 
-### Software:
-- **Sistema Operacional**: Linux (Ubuntu 20.04+, CentOS 8+, Debian 11+) / e FreeBSD
-- **Docker & Docker Compose** (para alguns componentes)
-- **Python 3.8+**
-- **Git**
+---
 
-## 🔗 Ferramentas e Links Oficiais
+## 🔗 5. Ferramentas e Recursos Oficiais
 
-### 🔥 Firewall/Roteador
-- **[OPNsense](https://opnsense.org/)** - Firewall e roteador open source baseado em FreeBSD
+### 5.1 📚 Links das Ferramentas
 
-### 🛡️ Detecção e Proteção
-- **[CrowdSec](https://www.crowdsec.net/)** - Sistema de detecção e resposta a intrusões colaborativo
-- **[Suricata](https://suricata.io/)** - IDS/IPS e engine de inspeção profunda de pacotes
-- **[ClamAV](https://www.clamav.net/)** - Antivírus open source
+| Categoria | Ferramenta | Website Oficial | Descrição |
+|-----------|-----------|----------------|-----------|
+| **Firewall** | OPNsense | [opnsense.org](https://opnsense.org/) | Firewall e roteador baseado em FreeBSD |
+| **Detecção** | CrowdSec | [crowdsec.net](https://www.crowdsec.net/) | Sistema de detecção colaborativo |
+| **IDS/IPS** | Suricata | [suricata.io](https://suricata.io/) | Engine de inspeção profunda de pacotes |
+| **Antivírus** | ClamAV | [clamav.net](https://www.clamav.net/) | Antivírus open source |
+| **SIEM/XDR** | Wazuh | [wazuh.com](https://wazuh.com/) | Plataforma de SIEM e XDR |
+| **Logging** | Sysmon | [Microsoft Docs](https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon) | Logging avançado para Windows |
+| **DFIR** | DFIR-IRIS | [dfir-iris.org](https://dfir-iris.org/) | Gerenciamento de investigações forenses |
+| **TI Platform** | MISP | [misp-project.org](https://www.misp-project.org/) | Compartilhamento de threat intelligence |
 
-### 📊 SIEM e Monitoramento
-- **[Wazuh](https://wazuh.com/)** - Plataforma open source de SIEM e XDR
-- **[Sysmon](https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon)** - Ferramenta de logging avançado para Windows
+---
 
-### 🔍 Resposta a Incidentes
-- **[DFIR-IRIS](https://dfir-iris.org/)** - Plataforma web para gerenciamento de investigações forenses
-- **[MISP](https://www.misp-project.org/)** - Plataforma de compartilhamento de threat intelligence
+## 📊 6. Fluxos Operacionais
 
-## 📊 Exemplo da Solução Implementada
+### 6.1 🔄 Fluxo de Detecção e Resposta
 
-### Fluxo de Detecção e Resposta:
 ```
-1. Evento Suspeito → 2. Detecção (Suricata/CrowdSec) → 3. Alerta (Wazuh) → 4. Caso (DFIR-IRIS) → 5. IOCs (MISP)
+① Evento Suspeito
+    ↓
+② Detecção (Suricata/CrowdSec)
+    ↓
+③ Alerta (Wazuh)
+    ↓
+④ Criação de Caso (DFIR-IRIS)
+    ↓
+⑤ Export de IOCs (MISP)
 ```
 
-### Capacidades Demonstradas:
-- **Security Events Overview** - Dashboard centralizado
-- **Compliance Monitoring** - Monitoramento de conformidade
-- **Threat Hunting** - Caça a ameaças proativa
-- **Vulnerability Assessment** - Avaliação de vulnerabilidades
-- **File Integrity Monitoring** - Monitoramento de integridade
+### 6.2 🔗 Arquitetura de Integração
 
-### Workflows de Resposta:
-- **Investigação de Malware**
-- **Resposta a Phishing**
-- **Resposta a Vazamento de Dados**
-- **Investigação de Ameaças Internas**
-
-## 🔧 Arquitetura de Integração
-
-### Fluxo de Dados Implementado:
 ```
 Wazuh SIEM ──→ DFIR-IRIS (Criação automática de casos)
      ↓
@@ -178,55 +162,91 @@ DFIR-IRIS ──→ MISP (Export de IOCs após investigação)
 MISP ──→ Threat Intelligence (Compartilhamento de indicadores)
 ```
 
-### Comunicação Entre Ferramentas:
-- **Webhooks** para automação de workflows
-- **APIs REST** para integração de dados
-- **Feeds de Threat Intelligence** para enriquecimento
-- **Dashboards unificados** para visualização
+### 6.3 🛠️ Métodos de Comunicação
 
-## 📈 Resultados Obtidos
-
-### Métricas de Eficiência:
-- **MTTD** (Mean Time to Detection) - Tempo médio de detecção
-- **MTTR** (Mean Time to Response) - Tempo médio de resposta
-- **Taxa de Falsos Positivos** - Precisão dos alertas
-- **Cobertura de Endpoints** - Abrangência do monitoramento
-- **Status dos Feeds de TI** - Qualidade da threat intelligence
-
-### Tipos de Ameaças Detectadas:
-- Malware e trojans
-- Tentativas de força bruta
-- Exfiltração de dados
-- Alterações não autorizadas em arquivos
-- Comunicação com servidores C&C
-- Atividades suspeitas de usuários
-
-### Benefícios da Implementação:
-- **Visibilidade completa** da rede e endpoints
-- **Resposta coordenada** a incidentes
-- **Documentação estruturada** de casos
-- **Compartilhamento de inteligência** de ameaças
-- **Custo zero** de licenciamento
-
-## 🤝 Contribuição
-
-Contribuições são bem-vindas!
-
-## 🙏 Créditos e Agradecimentos
-
-Este projeto foi desenvolvido com foco em democratizar o acesso a soluções de segurança cibernética de alta qualidade.
-
-**Se você utilizar este projeto em trabalhos acadêmicos ou implementações empresariais, por favor, mantenha os devidos créditos.**
-
-## 📞 Suporte
-
-Para dúvidas, sugestões ou suporte:
-
-- 📧 **Email**: [pedrosilvaevangelista2005@gmail.com]
-- 💬 **Issues**: [GitHub Issues](https://github.com/pedrosilvaevangelista/Soc-Opensource/issues)
+| Método | Uso | Finalidade |
+|--------|-----|-----------|
+| **Webhooks** | Wazuh → DFIR-IRIS | Automação de workflows |
+| **APIs REST** | Todas as ferramentas | Integração de dados |
+| **Feeds de TI** | MISP → Wazuh | Enriquecimento de alertas |
+| **Dashboards** | Wazuh | Visualização unificada |
 
 ---
 
-⭐ **Se este projeto foi útil para você, considere dar uma estrela!**
+## 🎯 7. Capacidades Demonstradas
+
+### 7.1 📈 Funcionalidades Principais
+
+| Funcionalidade | Descrição |
+|---------------|-----------|
+| **Security Events Overview** | Dashboard centralizado com visão holística |
+| **Compliance Monitoring** | Monitoramento de conformidade regulatória |
+| **Threat Hunting** | Caça a ameaças proativa e investigativa |
+| **Vulnerability Assessment** | Avaliação contínua de vulnerabilidades |
+| **File Integrity Monitoring** | Monitoramento de integridade de arquivos críticos |
+
+### 7.2 🔍 Workflows de Resposta Implementados
+
+| # | Workflow | Cenário | Ferramentas Envolvidas |
+|---|---------|---------|----------------------|
+| **①** | Investigação de Malware | Detecção e análise de arquivos maliciosos | Wazuh + ClamAV + DFIR-IRIS + MISP |
+| **②** | Resposta a Phishing | Investigação de campanhas de phishing | Wazuh + DFIR-IRIS + MISP |
+| **③** | Resposta a Vazamento de Dados | Investigação de exfiltração de informações | Wazuh + Suricata + DFIR-IRIS |
+| **④** | Investigação de Ameaças Internas | Análise de comportamento suspeito de usuários | Wazuh + Sysmon + DFIR-IRIS |
+
+---
+
+## 📈 8. Resultados e Métricas
+
+### 8.1 🎯 Métricas de Eficiência
+
+| Métrica | Sigla | Descrição |
+|---------|-------|-----------|
+| **Mean Time to Detection** | MTTD | Tempo médio entre o início de um ataque e sua detecção |
+| **Mean Time to Response** | MTTR | Tempo médio entre a detecção e a resposta efetiva |
+| **Taxa de Falsos Positivos** | FPR | Precisão e acurácia dos alertas gerados |
+| **Cobertura de Endpoints** | - | Percentual de dispositivos monitorados |
+| **Status dos Feeds de TI** | - | Qualidade e atualização da threat intelligence |
+
+### 8.2 🎭 Tipos de Ameaças Detectadas
+
+| # | Categoria | Exemplos |
+|---|-----------|----------|
+| **①** | Malware | Trojans, ransomware, spyware |
+| **②** | Ataques de Força Bruta | Tentativas de login não autorizado |
+| **③** | Exfiltração de Dados | Transferências suspeitas de arquivos |
+| **④** | Integridade de Arquivos | Alterações não autorizadas em arquivos críticos |
+| **⑤** | Command & Control | Comunicação com servidores C&C conhecidos |
+| **⑥** | Insider Threats | Atividades suspeitas de usuários internos |
+
+### 8.3 ✅ Benefícios da Implementação
+
+| # | Benefício | Impacto |
+|---|-----------|---------|
+| **①** | Visibilidade Completa | Monitoramento de 100% da rede e endpoints |
+| **②** | Resposta Coordenada | Workflow estruturado para tratamento de incidentes |
+| **③** | Documentação Estruturada | Registro detalhado de todos os casos |
+| **④** | Compartilhamento de Inteligência | Colaboração com a comunidade global |
+| **⑤** | Custo Zero de Licenciamento | Solução totalmente open source |
+
+---
+
+## 🖼️ 9. Topologia Implementada
+
+<h3>Exemplo Topologia Pós-implementação</h3>
+
+<img src="assets/TOPOLOGIA DEPOIS.png" alt="Banner do Curso CiberLivre" width="1000"/>
+
+---
+## 🔗 10. Links Uteis
+
+| Titulo | Link | Descrição |
+|-----------|-----------|----------------|
+| **Wazuh - Segurança Cibernética** | [Playlist](https://youtube.com/playlist?list=PLALjBisXuYJc15J1wWbxXwBLZcCSCjmUJ&si=0z-fGhPMOQkJFofg) | Configurações completas do sistema wazuh |
+| **Instalação e configuração misp** | [video](https://youtu.be/xqP_l-AF4Jc) | Configuração basica misp |
+
+## 📝 11. Notas Finais
+
+**Se você utilizar este projeto em trabalhos acadêmicos ou implementações empresariais, por favor, mantenha os devidos créditos.**
 
 **Desenvolvido com ❤️ para a comunidade de segurança cibernética**
