@@ -6,7 +6,7 @@
 
 ---
 
-## 📋 1. About
+## 1. About
 
 A SOC (Security Operations Center) is usually framed as something only enterprises with six-figure budgets can afford. This project is proof that's not entirely true.
 
@@ -16,7 +16,7 @@ This repo isn't "here's how to install X." It's "here's how the pieces think tog
 
 **To be upfront about intent:** this isn't pitched as an enterprise-ready deployment, and it's not meant to be dropped into a company as-is. The goal is educational — to understand, end to end, how a SOC *should* think and function, so the concepts aren't a black box the day you actually work with a real environment, open source or commercial.
 
-### 1.1 🎯 What this architecture actually does
+### 1.1 What this architecture actually does
 
 | Capability | Concept |
 |---|---|
@@ -30,7 +30,7 @@ This repo isn't "here's how to install X." It's "here's how the pieces think tog
 
 ---
 
-## 🧠 2. The Big Picture — Thinking in Layers, Not Boxes
+## 2. The Big Picture — Thinking in Layers, Not Boxes
 
 The mistake most people make when designing a SOC is thinking in terms of *products* first. The right way to think about it is in terms of **logical functions** — then you pick the tool that fills each function.
 
@@ -44,7 +44,7 @@ There are three logical planes here:
 
 The key idea: **data gets progressively refined and challenged as it moves through each checkpoint.** Raw logs become filtered events, filtered events become correlated alerts, and correlated alerts become documented cases with shareable intelligence. Nothing gets to an analyst's screen without already being processed by multiple layers first.
 
-### 2.1 📊 Component Map
+### 2.1 Component Map
 
 | Layer | Component | Logical Role |
 |---|---|---|
@@ -64,7 +64,7 @@ The key idea: **data gets progressively refined and challenged as it moves throu
 
 ---
 
-## 🛡️ 3. Why Each Tool Earns Its Place
+## 3. Why Each Tool Earns Its Place
 
 Instead of a feature dump, here's the *reasoning* behind each choice:
 
@@ -90,7 +90,7 @@ Instead of a feature dump, here's the *reasoning* behind each choice:
 
 ---
 
-## 🔄 4. How an Incident Actually Flows
+## 4. How an Incident Actually Flows
 
 Data doesn't jump straight to a workstation — it earns its way there. Here's the actual path, in both directions:
 
@@ -129,7 +129,7 @@ This is the part most architectures get wrong: **the loop has to close.** A SOC 
 
 ---
 
-## 🎬 5. A Concrete Walkthrough — Following One Attack Through the Whole System
+## 5. A Concrete Walkthrough — Following One Attack Through the Whole System
 
 Diagrams are useful, but nothing makes an architecture click like tracing a real scenario through it end to end. Here's a phishing attempt, followed layer by layer:
 
@@ -153,7 +153,7 @@ This is the entire point of the architecture: **no single tool "catches" the att
 
 ---
 
-## 🌐 6. Segmentation as a Design Principle, Not a Network Diagram
+## 6. Segmentation as a Design Principle, Not a Network Diagram
 
 The topology isn't about which switch model or how much RAM a server has — it's about **isolating blast radius**. A few logical decisions drive the whole design:
 
@@ -169,7 +169,7 @@ The topology isn't about which switch model or how much RAM a server has — it'
 
 ---
 
-## 📚 7. The Concepts You Actually Need to Build This
+## 7. The Concepts You Actually Need to Build This
 
 If you want to build your own version of this, the tools matter far less than understanding these concepts first:
 
@@ -184,7 +184,7 @@ Once these concepts click, the specific tool choices become almost interchangeab
 
 ---
 
-## 🔗 8. Official Tools & Docs
+## 8. Official Tools & Docs
 
 | Category | Tool | Link |
 |---|---|---|
@@ -199,7 +199,7 @@ Once these concepts click, the specific tool choices become almost interchangeab
 
 ---
 
-## 🎯 9. What This Architecture Enables
+## 9. What This Architecture Enables
 
 | Scenario | Layers Involved |
 |---|---|
@@ -212,7 +212,7 @@ Once these concepts click, the specific tool choices become almost interchangeab
 
 ---
 
-## 📝 10. Final Notes
+## 10. Final Notes
 
 This project is a living reference for learning, not a finished product or a deployment blueprint. If it helps you understand how a SOC actually works, well enough to design your own — for a lab, a study project, or as groundwork before touching a real environment — that's the goal. If you use it in academic or personal study work, a credit is appreciated.
 
